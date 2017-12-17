@@ -54,7 +54,7 @@ desc */
 
 -- ddstart
   Column1 Varchar(10) NOT NULL, --dd example comment for a Column1
-  Column2 Decimal(10,2) --dd comment2
+  Column2 Decimal(10,2) NULL --dd comment2
 -- ddend
 
 ```
@@ -65,14 +65,15 @@ the content between those lines will be captured as table description.
 and all lines in between are considered as one column per line
 3. All lines between 2) must have ` --dd `, if that is a definition for column
 4. Must give `NULL` or `NOT NULL`
-5. The Data Type must not having space
-6. Any lines between 2) - if wihout a ` --dd ` will be skipped
+5. The Data Type must not having space(s)
+6. Any lines between 2) - if without a ` --dd ` will be skipped
 
 **Markdown**
 
 ```
-**Table Name**
-> Table Desc
+## Table Name
+
+Table Desc
 
 |Column Name|Data Type|Nullable|Comment|
 |:----------|:--------|:-------|-------|
@@ -83,10 +84,11 @@ and all lines in between are considered as one column per line
 **Confluence Wiki**
 
 ```
-**Table Name**
+h2. Table Name
+
 Table Desc
 
-||Column Name|||Data Type|||Nullable|Comment||
+||Column Name|||Data Type|||Nullable||Comment||
 |Column1|Varchar(10)|No|example comment for a column1|
 |Column2|Decimal(10,2)|No|example comment for a column2|
 ```
