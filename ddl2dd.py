@@ -10,7 +10,7 @@ import os.path
 import re
 from collections import namedtuple
 
-REX_MATCHER = re.compile(r"^(\w+?)\s(.+?)\s.+--dd(.+?)$")
+REX_MATCHER = re.compile(r"^(\w+?)\s+(.+?)\s.+--dd(.+?)$")
 
 Column = namedtuple('Column',['name','dtype','nullable','comment'])
 
@@ -21,6 +21,8 @@ WIKI_HEADER = """\n||Name|||Data Type|||Nullable|||Comment||"""
 
 class DDL(object):
     def __init__(self, table_name, ddl_text):
+        """Give Table name and DDL as str format to build the object
+        """
 
 
         self.table_name = table_name
@@ -74,7 +76,7 @@ class DDL(object):
             if line.startswith(','):
                 line = line[1:].strip()
 
-            _nullable = 'Yes'
+            _nullable = '**Yes**'
             if not '--dd' in line:
                 pass # skipped
             else:
@@ -82,9 +84,9 @@ class DDL(object):
                     _nullable = 'No'
 
                 # Start REX_MATCHER
-                print(line)
+                # print(line)
                 reg = REX_MATCHER.match(line)
-                print(reg)
+                # print(reg)
 
                 c = Column(reg.group(1).strip(),
                            reg.group(2).strip(),
@@ -103,8 +105,8 @@ class DDL(object):
         all_output_lines = []
         # output the table name as first line
         heading_sign = {
-            'MD':'## ',
-            'WIKI':'h2. '
+            'MD':'\n\n## ',
+            'WIKI':'\n\nh2. '
         }
 
         all_output_lines.append('{prefix}{name}\n'.format(
@@ -122,5 +124,5 @@ class DDL(object):
         for c in self.columns:
             all_output_lines.append('|{}|{}|{}|{}|'.format(c.name, c.dtype,
                                                            c.nullable, c.comment))
-        print('\n'.join(all_output_lines))
+        # print('\n'.join(all_output_lines))
         return '\n'.join(all_output_lines)
